@@ -188,7 +188,7 @@ impl AnalyzerManager {
             let v = self
                 .variables
                 .get(key)
-                .ok_or(anyhow!("the value of key {} is not found", key))?;
+                .ok_or(anyhow!("the value of key {key} is not found"))?;
 
             Ok(v.to_string())
         })

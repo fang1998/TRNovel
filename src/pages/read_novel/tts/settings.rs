@@ -78,7 +78,7 @@ pub fn SpeedSetting(
     ) {
         View(flex_direction:Direction::Horizontal,justify_content:Flex::SpaceBetween) {
             $Line::from("播放速度:").style(theme.basic.text)
-            $Line::from(format!("{}x", tts_config.read().speed)).style(theme.basic.text)
+            $Line::from(format!("{speed}x", speed = tts_config.read().speed)).style(theme.basic.text)
         }
     })
 }
@@ -114,7 +114,7 @@ pub fn VolumeSetting(
     ) {
         View(flex_direction:Direction::Horizontal,justify_content:Flex::SpaceBetween) {
             $Line::from("音量:").style(theme.basic.text)
-            $Line::from(format!("{}x", tts_config.read().volume)).style(theme.basic.text)
+            $Line::from(format!("{volume}x", volume = tts_config.read().volume)).style(theme.basic.text)
         }
     })
 }
@@ -150,7 +150,7 @@ pub fn AutoPlaySetting(
     ) {
         View(flex_direction:Direction::Horizontal,justify_content:Flex::SpaceBetween) {
             $Line::from("自动播放:").style(theme.basic.text)
-            $Line::from(format!("{}", tts_config.read().auto_play)).style(theme.basic.text)
+            $Line::from(format!("{auto_play}", auto_play = tts_config.read().auto_play)).style(theme.basic.text)
         }
     })
 }

@@ -289,7 +289,7 @@ where
             })
         })
         WarningModal(
-            tip: format!("加载失败:{:?}", error.read().as_ref()),
+            tip: format!("加载失败:{error:?}", error = error.read().as_ref()),
             is_error: error.read().is_some(),
             open: error.read().is_some(),
         )

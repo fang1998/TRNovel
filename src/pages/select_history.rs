@@ -66,9 +66,9 @@ impl WidgetRef for ListItem {
                     .render(bottom_left, buf);
 
                 Text::from(format!(
-                    "{:.2}% {}",
-                    item.percent,
-                    item.last_read_at.format("%Y-%m-%d %H:%M:%S")
+                    "{percent:.2}% {last_read_at}",
+                    percent = item.percent,
+                    last_read_at = item.last_read_at.format("%Y-%m-%d %H:%M:%S")
                 ))
                 .style(self.theme.basic.border_info.patch(text_color))
                 .right_aligned()
@@ -82,14 +82,17 @@ impl WidgetRef for ListItem {
                 .style(text_color)
                 .render(top, buf);
 
-                Span::from(format!("书源：{}", item.book_source))
-                    .style(self.theme.basic.border_info.patch(text_color))
-                    .render(bottom_left, buf);
+                Span::from(format!(
+                    "书源：{book_source}",
+                    book_source = item.book_source
+                ))
+                .style(self.theme.basic.border_info.patch(text_color))
+                .render(bottom_left, buf);
 
                 Text::from(format!(
-                    "{:.2}% {}",
-                    item.percent,
-                    item.last_read_at.format("%Y-%m-%d %H:%M:%S")
+                    "{percent:.2}% {last_read_at}",
+                    percent = item.percent,
+                    last_read_at = item.last_read_at.format("%Y-%m-%d %H:%M:%S")
                 ))
                 .style(self.theme.basic.border_info.patch(text_color))
                 .right_aligned()
@@ -153,9 +156,9 @@ pub fn SelectHistory(mut hooks: Hooks) -> impl Into<AnyElement<'static>> {
             top_title: Line::from("历史记录").centered().style(theme.basic.border_title),
             bottom_title: Line::from(
                 format!(
-                    "{}/{} 条",
-                    state.read().selected.unwrap_or(0)+1,
-                    histories.len())
+                    "{selected}/{total} 条",
+                    selected = state.read().selected.unwrap_or(0) + 1,
+                    total = histories.len())
                 )
                 .style(theme.basic.border_info.not_dim()),
             render_item: {

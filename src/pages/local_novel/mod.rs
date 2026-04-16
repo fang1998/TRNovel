@@ -96,7 +96,7 @@ pub fn SelectFile(mut hooks: Hooks) -> impl Into<AnyElement<'static>> {
                 empty_message: "未搜索到小说文件，请确认路径是否正确，或按s 开始输入路径",
             )
             WarningModal(
-                tip: format!("加载失败:{:?}", error.read().as_ref()),
+                tip: format!("加载失败:{error:?}", error = error.read().as_ref()),
                 is_error: error.read().is_some(),
                 open: error.read().is_some(),
             )

@@ -62,14 +62,17 @@ impl WidgetRef for ListItem {
             .centered()
             .render(top, buf);
 
-        Line::from(format!("网址: {}", self.book_source.book_source_url))
-            .style(self.theme.basic.text.patch(text_style))
-            .left_aligned()
-            .render(bottom_left, buf);
+        Line::from(format!(
+            "网址: {url}",
+            url = self.book_source.book_source_url
+        ))
+        .style(self.theme.basic.text.patch(text_style))
+        .left_aligned()
+        .render(bottom_left, buf);
 
         Line::from(format!(
-            "最后更新: {}",
-            time_to_string(self.book_source.last_update_time).unwrap_or_default()
+            "最后更新: {last_update}",
+            last_update = time_to_string(self.book_source.last_update_time).unwrap_or_default()
         ))
         .style(self.theme.basic.border_info.patch(text_style))
         .right_aligned()
@@ -168,7 +171,7 @@ pub fn ImportBookSource(
             }
         )
         WarningModal(
-            tip: format!("解析失败:{:?}", error.read().as_ref()),
+            tip: format!("解析失败:{error:?}", error = error.read().as_ref()),
             is_error: error.read().is_some(),
             open: error.read().is_some(),
         )

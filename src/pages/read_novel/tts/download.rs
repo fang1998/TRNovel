@@ -69,20 +69,20 @@ where
     });
 
     let top_title = if is_downloaded {
-        format!("{} - 已下载", props.title)
+        format!("{title} - 已下载", title = props.title)
     } else if !downloading.get() {
-        format!("{} - 未下载", props.title)
+        format!("{title} - 未下载", title = props.title)
     } else {
-        format!("{} - 下载中", props.title)
+        format!("{title} - 下载中", title = props.title)
     };
 
     let element = if is_downloaded {
         element!(Fragment{
-            $Line::from(format!("文件地址: {}",state.read().path.display()))
+            $Line::from(format!("文件地址: {path}", path = state.read().path.display()))
         })
     } else if let Some(err) = &*error.read() {
         element!(Fragment{
-            $Line::from(format!("下载失败, 按Enter重新开始下载, Error:{}",err)).style(theme.colors.error_color)
+            $Line::from(format!("下载失败, 按Enter重新开始下载, Error:{err}")).style(theme.colors.error_color)
         })
     } else if !downloading.get() {
         element!(Fragment{
@@ -97,9 +97,9 @@ where
                 (progress.0 as f64 / progress.1 as f64).clamp(0.0, 1.0)
             })
             .label(format!(
-                "{}/{}",
-                format_bytes(progress.0),
-                format_bytes(progress.1)
+                "{current}/{total}",
+                current = format_bytes(progress.0),
+                total = format_bytes(progress.1)
             ))
             .gauge_style(theme.highlight);
         element!(Fragment{

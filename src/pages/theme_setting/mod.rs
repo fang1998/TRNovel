@@ -39,7 +39,7 @@ impl WidgetRef for ListItem {
 
         block.render(area, buf);
 
-        let color = Line::from(format!("■ {}", self.color))
+        let color = Line::from(format!("■ {color}", color = self.color))
             .centered()
             .style(self.color);
         color.render(inner_area, buf);

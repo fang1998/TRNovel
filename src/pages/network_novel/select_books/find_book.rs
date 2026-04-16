@@ -116,14 +116,19 @@ pub fn FindBooks(props: &FindBooksProps, mut hooks: Hooks) -> impl Into<AnyEleme
             items: books.read().clone().unwrap_or_default(),
             top_title: Line::from(
                 if let Some(explore)= &props.current_explore{
-                    format!("选择书籍 ({})",explore.0.title)
+                    format!("选择书籍 ({title})", title = explore.0.title)
                 }else{
                     "选择书籍".to_string()
                 }
             ).style(theme.basic.border_title).centered(),
             bottom_title: if books.read().as_ref().map(|b|b.len()).unwrap_or(0)>0{
                 Line::from(
-                    format!("第 {} 页, {}/{}", page.get(), list_state.read().selected.unwrap_or(0)+1, books.read().as_ref().map(|b|b.len()).unwrap_or(0))
+                    format!(
+                        "第 {page} 页, {selected}/{total}",
+                        page = page.get(),
+                        selected = list_state.read().selected.unwrap_or(0) + 1,
+                        total = books.read().as_ref().map(|b| b.len()).unwrap_or(0)
+                    )
                 ).centered().style(theme.basic.border_info)
             }else{
                 Line::from("暂无书籍").centered().style(theme.basic.border_info)
@@ -158,7 +163,7 @@ pub fn FindBooks(props: &FindBooksProps, mut hooks: Hooks) -> impl Into<AnyEleme
             },
         )
         WarningModal(
-            tip: format!("{:?}", error.read().as_ref()),
+            tip: format!("{error:?}", error = error.read().as_ref()),
             is_error: error.read().is_some(),
             open: error.read().is_some(),
         )

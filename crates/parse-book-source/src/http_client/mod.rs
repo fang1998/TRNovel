@@ -25,9 +25,9 @@ impl HttpClient {
             for (k, v) in header {
                 headers.insert(
                     HeaderName::try_from(k)
-                        .map_err(|e| anyhow!("header name is not valid: {}", e))?,
+                        .map_err(|e| anyhow!("header name is not valid: {e}"))?,
                     HeaderValue::from_str(v)
-                        .map_err(|e| anyhow!("header value is not valid: {}", e))?,
+                        .map_err(|e| anyhow!("header value is not valid: {e}"))?,
                 );
             }
             client = client.default_headers(headers);
@@ -53,9 +53,9 @@ impl HttpClient {
         if url.starts_with("http") {
             url.to_string()
         } else if url.starts_with('/') {
-            format!("{}{}", self.base_url, url)
+            format!("{base_url}{url}", base_url = self.base_url)
         } else {
-            format!("{}/{}", self.base_url, url)
+            format!("{base_url}/{url}", base_url = self.base_url)
         }
     }
 

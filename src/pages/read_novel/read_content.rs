@@ -67,7 +67,11 @@ pub fn ReadContent(
                 player.set_volume(tts_config.read().volume);
             }
         },
-        format!("{}-{}", tts_config.read().speed, tts_config.read().volume),
+        format!(
+            "{speed}-{volume}",
+            speed = tts_config.read().speed,
+            volume = tts_config.read().volume
+        ),
     );
 
     hooks.use_async_effect(
@@ -182,7 +186,10 @@ pub fn ReadContent(
 
     let mut current_line = hooks.use_memo(
         || ((line_percent.get() * (line_count as f64) * 1000.0).round() as usize) / 1000,
-        format!("{}-{}", line_count, line_percent.get()),
+        format!(
+            "{line_count}-{line_percent}",
+            line_percent = line_percent.get()
+        ),
     );
     let mut current_time = hooks.use_state(String::default);
 
@@ -325,7 +332,11 @@ pub fn ReadContent(
             margin: Margin::new(1,0),
         ){
             $Line::from(format!("{current_line}/{line_count} 行")).style(theme.novel.page)
-            $Line::from(format!("{:.2}% {}",props.chapter_percent, current_time.read().clone())).style(theme.novel.progress).right_aligned()
+            $Line::from(format!(
+                "{chapter_percent:.2}% {current_time}",
+                chapter_percent = props.chapter_percent,
+                current_time = current_time.read().clone()
+            )).style(theme.novel.progress).right_aligned()
         }
     })
 }

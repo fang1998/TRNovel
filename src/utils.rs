@@ -17,12 +17,12 @@ pub fn novel_catch_dir() -> Result<PathBuf> {
 
 pub fn get_path_md5<T: AsRef<Path>>(path: T) -> Result<String> {
     let md5 = md5::compute(path.as_ref().canonicalize()?.to_string_lossy().as_bytes());
-    Ok(format!("{:x}", md5))
+    Ok(format!("{md5:x}"))
 }
 
 pub fn get_md5_string<T: ToString>(value: T) -> String {
     let md5 = md5::compute(value.to_string());
-    format!("{:x}", md5)
+    format!("{md5:x}")
 }
 
 pub fn time_to_string(timestamp: u64) -> anyhow::Result<String> {
@@ -47,12 +47,12 @@ pub fn format_bytes(bytes: usize) -> String {
     }
 
     if unit_index == 0 {
-        format!("{} {}", size, UNITS[unit_index])
+        format!("{size} {unit}", unit = UNITS[unit_index])
     } else {
         format!(
-            "{:.1} {}",
-            (bytes as f64) / (KB as f64).powi(unit_index as i32),
-            UNITS[unit_index]
+            "{value:.1} {unit}",
+            value = (bytes as f64) / (KB as f64).powi(unit_index as i32),
+            unit = UNITS[unit_index]
         )
     }
 }

@@ -11,7 +11,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     if !model.is_downloaded() {
         model
             .async_download(|downloaded, total| {
-                println!("模型下载进度: {}/{}", downloaded, total);
+                println!("模型下载进度: {downloaded}/{total}");
             })
             .await?;
     }
@@ -19,7 +19,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     if !voices.is_downloaded() {
         voices
             .async_download(|downloaded, total| {
-                println!("语音数据下载进度: {}/{}", downloaded, total);
+                println!("语音数据下载进度: {downloaded}/{total}");
             })
             .await?;
     }
@@ -90,9 +90,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut chapter_tts = novel_tts.chapter_tts(text);
 
     // 流式处理文本到音频
-    let (audio_queue, mut position_rx) = chapter_tts.stream(Voice::Zf006(1), |error| {
-        eprintln!("TTS处理错误: {:?}", error)
-    });
+    let (audio_queue, mut position_rx) =
+        chapter_tts.stream(Voice::Zf006(1), |error| eprintln!("TTS处理错误: {error:?}"));
 
     // 监听字符位置更新
     tokio::spawn(async move {
@@ -100,7 +99,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         while let Some(index) = position_rx.recv().await {
             if let Some(index) = index {
                 if let Some(chunk) = active_index.get(index) {
-                    println!("当前播放文本:{:?}", &text[chunk.start..chunk.end]);
+                    println!(
+                        "当前播放文本:{chunk_text:?}",
+                        chunk_text = &text[chunk.start..chunk.end]
+                    );
                 }
             } else {
                 println!("播放完成");

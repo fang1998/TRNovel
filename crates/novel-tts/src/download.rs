@@ -47,7 +47,8 @@ where
         fs::create_dir_all(parent).await?;
     }
 
-    let path = format!("{}.download", dest.display());
+    let download_path = dest.display();
+    let path = format!("{download_path}.download");
 
     let (mut downloaded, mut file) = if let Ok(metadata) = std::fs::metadata(&path) {
         let mut file = fs::File::options().append(true).open(&path).await?;
@@ -61,7 +62,7 @@ where
 
     let mut client = client.get(url);
     if downloaded > 0 {
-        client = client.header(reqwest::header::RANGE, format!("bytes={}-", downloaded));
+        client = client.header(reqwest::header::RANGE, format!("bytes={downloaded}-"));
     }
 
     let mut res = client.send().await?.error_for_status()?;

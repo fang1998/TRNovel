@@ -18,7 +18,7 @@ fn rule_to_selector(rule: &str) -> Result<String> {
     let len = segments.len();
     for (index, segment) in segments.into_iter().enumerate() {
         if index == len - 1 && !segment.contains(".") {
-            selectors.push(format!("@{}", segment));
+            selectors.push(format!("@{segment}"));
             continue;
         }
         let mut segment = segment.trim();
@@ -39,16 +39,16 @@ fn rule_to_selector(rule: &str) -> Result<String> {
             2 => {
                 let value = parts[1];
                 let class = CLASS_MAP.get(parts[0]).unwrap_or(&"");
-                res.push_str(&format!("{}{}", class, value));
+                res.push_str(&format!("{class}{value}"));
             }
             3 => {
                 let value = parts[1];
                 let class = CLASS_MAP.get(parts[0]).unwrap_or(&"");
                 let position = parts[2].parse::<usize>()? + 1;
-                res.push_str(&format!("{}{}:nth-of-type({})", class, value, position));
+                res.push_str(&format!("{class}{value}:nth-of-type({position})"));
             }
             _ => {
-                return Err(anyhow!("Invalid rule: {}", segment).into());
+                return Err(anyhow!("Invalid rule: {segment}").into());
             }
         }
 
@@ -58,7 +58,7 @@ fn rule_to_selector(rule: &str) -> Result<String> {
 
             if position_str.contains("=") {
                 let (property_name, property_value) = position_str.split_once("=").unwrap();
-                res = format!(r#"{}[{}="{}"]"#, res, property_name, property_value);
+                res = format!(r#"{res}[{property_name}="{property_value}"]"#);
                 selectors.push(res);
                 continue;
             } else if position_str.starts_with("!") {
@@ -78,17 +78,20 @@ fn rule_to_selector(rule: &str) -> Result<String> {
                 } else {
                     let position = i.parse::<isize>()? + 1;
                     if position < 0 {
-                        range_res.push(format!(":nth-last-of-type({})", position.abs()));
+                        range_res.push(format!(
+                            ":nth-last-of-type({position})",
+                            position = position.abs()
+                        ));
                     } else {
-                        range_res.push(format!(":nth-of-type({})", position));
+                        range_res.push(format!(":nth-of-type({position})"));
                     }
                 }
             }
 
             if is_exclude {
-                res = format!("{}:not({})", res, range_res.join(","));
+                res = format!("{res}:not({joined})", joined = range_res.join(","));
             } else {
-                res = format!("{}:is({})", res, range_res.join(","));
+                res = format!("{res}:is({joined})", joined = range_res.join(","));
             }
         }
         selectors.push(res);

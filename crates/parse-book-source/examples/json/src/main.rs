@@ -13,12 +13,12 @@ async fn main() -> anyhow::Result<()> {
     // println!("{:#?}", res);
     let explores = parser.get_explores().await?;
     let res = parser.explore_books(&explores[0].url, 1, 2).await?;
-    println!("{:#?}", res);
+    println!("{res:#?}");
     let book_info = parser.get_book_info(&res[2].book_url).await?;
-    println!("{:#?}", book_info);
+    println!("{book_info:#?}");
     // sleep(Duration::from_secs(1));
     let toc = parser.get_chapters(&book_info.toc_url).await?;
-    println!("{:#?}", toc);
+    println!("{toc:#?}");
     // sleep(Duration::from_secs(1));
     // let content = parser.get_content(&toc[1].chapter_url).await?;
     // println!("{}", toc[1].chapter_url);

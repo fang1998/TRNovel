@@ -226,7 +226,7 @@ mod tests {
             end,
         } in result
         {
-            println!("Segment: '{}', Start: {}, End: {}", segment, start, end);
+            println!("Segment: '{segment}', Start: {start}, End: {end}");
             assert!(&text[start..end].contains(segment.trim()));
         }
     }

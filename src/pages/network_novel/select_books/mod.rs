@@ -88,7 +88,7 @@ pub fn SelectBooks(mut hooks: Hooks) -> impl Into<AnyElement<'static>> {
             }
         )
         WarningModal(
-            tip: format!("{:?}", error.read().as_ref()),
+            tip: format!("{error:?}", error = error.read().as_ref()),
             is_error: error.read().is_some(),
             open: error.read().is_some(),
         )

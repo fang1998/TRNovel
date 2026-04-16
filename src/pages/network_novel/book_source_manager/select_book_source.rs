@@ -54,14 +54,14 @@ impl WidgetRef for BookSourceListItem {
             .centered()
             .render(top, buf);
 
-        Line::from(format!("网址: {}", item.book_source_url))
+        Line::from(format!("网址: {url}", url = item.book_source_url))
             .style(self.theme.basic.text.patch(text_style))
             .left_aligned()
             .render(bottom_left, buf);
 
         Line::from(format!(
-            "最后更新: {}",
-            time_to_string(item.last_update_time).unwrap_or_default()
+            "最后更新: {last_update}",
+            last_update = time_to_string(item.last_update_time).unwrap_or_default()
         ))
         .style(self.theme.basic.border_info.patch(text_style))
         .right_aligned()
