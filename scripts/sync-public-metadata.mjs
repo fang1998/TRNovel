@@ -82,6 +82,7 @@ const packageName = cliPackageName(config);
 const remoteUrl = getOriginUrl();
 const githubUrl = normalizeGitHubUrl(remoteUrl);
 const repository = parseGitHubRepository(githubUrl);
+const githubPagesOrigin = `https://${repository.owner}.github.io`;
 const githubPagesUrl = `https://${repository.owner}.github.io/${repository.repo}`;
 const releaseBaseUrl = `${githubUrl}/releases/download/v${version}`;
 
@@ -175,6 +176,12 @@ faq = replaceOrThrow(
 writeFile("docs/src/content/docs/reference/question.md", faq);
 
 let astroConfig = readFile("docs/astro.config.mjs");
+astroConfig = replaceOrThrow(
+  astroConfig,
+  /site: "https:\/\/[^"]+"/,
+  `site: "${githubPagesOrigin}"`,
+  "docs/astro.config.mjs"
+);
 astroConfig = replaceOrThrow(
   astroConfig,
   /href: "https:\/\/github\.com\/[^/]+\/[^"]+"/,
