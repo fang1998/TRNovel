@@ -1,0 +1,15 @@
+{
+  "name": "trnovel-distribution",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "npm:sync-version": "node ./scripts/sync-npm-version.mjs",
+    "npm:sync-public-metadata": "node ./scripts/sync-public-metadata.mjs",
+    "npm:sync-all": "npm run npm:sync-version && npm run npm:sync-public-metadata",
+    "npm:stage-binaries": "node ./scripts/stage-binaries.mjs",
+    "npm:stage-local": "node ./scripts/stage-local-binary.mjs",
+    "npm:smoke-test": "node ./scripts/smoke-test-npm-package.mjs"
+  }
+}

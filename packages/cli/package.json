@@ -1,0 +1,26 @@
+{
+  "name": "@ir2026/trnovel",
+  "version": "0.8.4",
+  "description": "Terminal reader for novel",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "trnovel": "bin/trnovel.js",
+    "trn": "bin/trnovel.js"
+  },
+  "files": [
+    "bin",
+    "README.md"
+  ],
+  "optionalDependencies": {
+    "@ir2026/trnovel-darwin-arm64": "0.8.4",
+    "@ir2026/trnovel-darwin-x64": "0.8.4",
+    "@ir2026/trnovel-linux-x64-gnu": "0.8.4",
+    "@ir2026/trnovel-win32-x64-msvc": "0.8.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

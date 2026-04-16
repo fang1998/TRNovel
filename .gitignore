@@ -2,3 +2,8 @@
 /**/.DS_Store
 test-novels
 espeak-ng-data
+dist
+packages/*/trnovel
+packages/*/trnovel.exe
+*.tgz
+npm-debug.log*

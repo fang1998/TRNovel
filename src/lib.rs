@@ -64,7 +64,7 @@ where
     - 历史记录
     - 主题设置
 
-  GitHub: https://github.com/yexiyue/trnovel
+  GitHub: https://github.com/fang1998/TRNovel
   
   如果您觉得还不错，请考虑给项目点个 star，谢谢！
 "#

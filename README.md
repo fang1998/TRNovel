@@ -3,7 +3,7 @@
 
 > **TRNovel (Terminal Reader for Novel)** 是一个专为小说爱好者设计的终端阅读器。
 
-[![NPM Version](https://img.shields.io/npm/v/@trnovel/trnovel)](https://www.npmjs.com/package/@trnovel/trnovel) ![NPM Downloads](https://img.shields.io/npm/d18m/%40trnovel%2Ftrnovel?label=npm%20downloads) [![Crates.io Version](https://img.shields.io/crates/v/trnovel)](https://crates.io/crates/trnovel) ![Crates.io Total Downloads](https://img.shields.io/crates/d/trnovel?label=crates.io%20downloads)
+[![NPM Version](https://img.shields.io/npm/v/@ir2026/trnovel)](https://www.npmjs.com/package/@ir2026/trnovel) ![NPM Downloads](https://img.shields.io/npm/d18m/%40ir2026%2Ftrnovel?label=npm%20downloads) [![Crates.io Version](https://img.shields.io/crates/v/trnovel)](https://crates.io/crates/trnovel) ![Crates.io Total Downloads](https://img.shields.io/crates/d/trnovel?label=crates.io%20downloads)
 
 ## 目录
 
@@ -32,7 +32,9 @@ TRNovel 提供了以下功能：
 
 请注意，TRNovel 的网络小说功能与 [Legado](https://github.com/gedoor/legado) 的书源并不完全兼容。
 
-## [使用文档](https://yexiyue.github.io/TRNovel)
+## [使用文档](https://fang1998.github.io/TRNovel)
+
+如果你维护的是此项目的 fork，并计划通过 npm 分发 CLI，可参考 [NPM_PUBLISHING.md](./NPM_PUBLISHING.md)。
 
 ## 声明
 

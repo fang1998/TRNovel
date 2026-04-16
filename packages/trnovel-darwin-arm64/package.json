@@ -1,0 +1,19 @@
+{
+  "name": "@ir2026/trnovel-darwin-arm64",
+  "version": "0.8.4",
+  "description": "macOS arm64 binary for TRNovel",
+  "license": "MIT",
+  "files": [
+    "trnovel",
+    "README.md"
+  ],
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "arm64"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

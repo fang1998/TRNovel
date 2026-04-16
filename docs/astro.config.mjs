@@ -58,7 +58,7 @@ export default defineConfig({
         {
           icon: "github",
           label: "GitHub",
-          href: "https://github.com/yexiyue/TRNovel",
+          href: "https://github.com/fang1998/TRNovel",
         },
       ],
     }),

@@ -68,7 +68,7 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: 1.88.0
 
           target: ${{ matrix.target }}
 
@@ -113,7 +113,7 @@ jobs:
 
           use-cross: ${{ matrix.use-cross }}
 
-          toolchain: stable
+          toolchain: 1.88.0
 
           args: --release --target ${{ matrix.target }}
       - name: Cargo zigbuild

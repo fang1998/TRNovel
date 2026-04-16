@@ -1,0 +1,19 @@
+{
+  "name": "@ir2026/trnovel-win32-x64-msvc",
+  "version": "0.8.4",
+  "description": "Windows x64 MSVC binary for TRNovel",
+  "license": "MIT",
+  "files": [
+    "trnovel.exe",
+    "README.md"
+  ],
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

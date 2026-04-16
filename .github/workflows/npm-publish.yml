@@ -1,0 +1,135 @@
+name: Publish npm CLI
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build-binaries:
+    name: Build ${{ matrix.package-dir }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            package-dir: trnovel-darwin-arm64
+            binary-file: trnovel
+            use-zigbuild: false
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            package-dir: trnovel-darwin-x64
+            binary-file: trnovel
+            use-zigbuild: false
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            package-dir: trnovel-linux-x64-gnu
+            binary-file: trnovel
+            use-zigbuild: true
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            package-dir: trnovel-win32-x64-msvc
+            binary-file: trnovel.exe
+            use-zigbuild: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@1.88.0
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install Linux build dependencies
+        if: matrix.target == 'x86_64-unknown-linux-gnu'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev pkg-config libssl-dev openssl
+
+      - name: Install Zig
+        if: matrix.use-zigbuild
+        uses: mlugg/setup-zig@v2
+        with:
+          version: 0.15.1
+
+      - name: Install cargo-zigbuild
+        if: matrix.use-zigbuild
+        uses: taiki-e/install-action@v2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          tool: cargo-zigbuild
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Build release binary
+        if: ${{ !matrix.use-zigbuild }}
+        run: cargo build --release --target ${{ matrix.target }} --bin trnovel
+
+      - name: Build Linux release binary with zigbuild
+        if: matrix.use-zigbuild
+        run: cargo zigbuild --release --target ${{ matrix.target }} --bin trnovel
+
+      - name: Stage artifact
+        shell: bash
+        run: |
+          mkdir -p "dist/npm-binaries/${{ matrix.package-dir }}"
+          cp "target/${{ matrix.target }}/release/${{ matrix.binary-file }}" "dist/npm-binaries/${{ matrix.package-dir }}/${{ matrix.binary-file }}"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.package-dir }}
+          path: dist/npm-binaries/${{ matrix.package-dir }}/${{ matrix.binary-file }}
+          if-no-files-found: error
+
+  publish:
+    name: Publish npm packages
+    runs-on: ubuntu-latest
+    needs: build-binaries
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Download binary artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist/npm-binaries
+
+      - name: Sync npm package versions
+        run: node ./scripts/sync-npm-version.mjs
+
+      - name: Stage binaries into npm packages
+        run: node ./scripts/stage-binaries.mjs --binary-root dist/npm-binaries
+
+      - name: Smoke test CLI package on Linux
+        run: node ./scripts/smoke-test-npm-package.mjs --platform-package trnovel-linux-x64-gnu
+
+      - name: Publish platform packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish ./packages/trnovel-darwin-arm64 --access public --provenance
+          npm publish ./packages/trnovel-darwin-x64 --access public --provenance
+          npm publish ./packages/trnovel-linux-x64-gnu --access public --provenance
+          npm publish ./packages/trnovel-win32-x64-msvc --access public --provenance
+
+      - name: Publish CLI package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish ./packages/cli --access public --provenance

@@ -1,0 +1,50 @@
+{
+  "scope": "@ir2026",
+  "cliPackageName": "trnovel",
+  "binaryName": "trnovel",
+  "platformPackages": [
+    {
+      "directory": "trnovel-darwin-arm64",
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "binaryFile": "trnovel"
+    },
+    {
+      "directory": "trnovel-darwin-x64",
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "binaryFile": "trnovel"
+    },
+    {
+      "directory": "trnovel-linux-x64-gnu",
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "libc": [
+        "glibc"
+      ],
+      "binaryFile": "trnovel"
+    },
+    {
+      "directory": "trnovel-win32-x64-msvc",
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "binaryFile": "trnovel.exe"
+    }
+  ]
+}

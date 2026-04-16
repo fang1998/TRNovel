@@ -24,5 +24,5 @@ sidebar:
 
 您可以通过以下方式反馈问题或建议：
 
-- 在 GitHub 仓库中提交 issue：[TRNovel GitHub Issues](https://github.com/yexiyue/TRNovel/issues)
-- 加入我们的社区讨论：[TRNovel 讨论区](https://github.com/yexiyue/TRNovel/discussions)
+- 在 GitHub 仓库中提交 issue：[TRNovel GitHub Issues](https://github.com/fang1998/TRNovel/issues)
+- 加入我们的社区讨论：[TRNovel 讨论区](https://github.com/fang1998/TRNovel/discussions)

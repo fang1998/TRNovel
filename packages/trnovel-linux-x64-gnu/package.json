@@ -1,0 +1,22 @@
+{
+  "name": "@ir2026/trnovel-linux-x64-gnu",
+  "version": "0.8.4",
+  "description": "Linux x64 glibc binary for TRNovel",
+  "license": "MIT",
+  "files": [
+    "trnovel",
+    "README.md"
+  ],
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "libc": [
+    "glibc"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
